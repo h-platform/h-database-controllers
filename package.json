@@ -1,0 +1,21 @@
+{
+  "name": "h-seneca-bookshelf-controllers",
+  "version": "0.0.3",
+  "description": "This library provides premade controllers for bookshlef models for CRUD operations and injects coresponding seneca actions and patterns to the provided seneca instance",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "git" : "https://github.com/h-platform/h-seneca-bookshelf-controllers",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^7.1.1",
+    "lodash": "^4.16.6"
+  }, 
+  "peerDependencies": {
+    "bookshelf": "^0.9.2",
+    "config": "^1.19.0",
+    "knex": "^0.10.0"
+  }
+}

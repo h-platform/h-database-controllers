@@ -2,19 +2,20 @@ var mainController = require('./controllers');
 var _ = require('lodash');
 var fs = require('fs');
 var glob = require('glob');
+var l = require(appRoot + '/logger');
+var global_config = require('config');
 
 var configs = [];
 var controllers = [];
-var root = "";
 
-module.exports = function(seneca, l, global_config){
+var models_path = global_config.has("seneca.models_path") ? global_config.get("seneca.models_path") : "models";
+var models_glob_pattern = appRoot + '/' + models_path + '/*.js';
 
-    var models_path = global_config.has("seneca.models_path") ? global_config.get("seneca.models_path") : "models";
-    var models_glob_pattern = appRoot + '/' + models_path + '/*.js';
+var pods_path = global_config.has("seneca.pods_path") ? global_config.get("seneca.pods_path") : "pods";
+var pods_glob_pattern = appRoot + '/' + pods_path + '/*/controller.js';
 
-    var pods_path = global_config.has("seneca.pods_path") ? global_config.get("seneca.pods_path") : "pods";
-    var pods_glob_pattern = appRoot + '/' + pods_path + '/*/controller.js';
-
+module.exports = function(){
+    var seneca = this;
     glob(models_glob_pattern, {}, function (er, files) {
       // files is an array of filenames.
       _.each(files, function(file){

@@ -1,4 +1,4 @@
-var mainController = require('./controller');
+var mainController = require('./controllers');
 var _ = require('lodash');
 var fs = require('fs');
 var glob = require('glob');

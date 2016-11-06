@@ -40,8 +40,11 @@ module.exports = function(config){
         myModel.load(config.relations);
       }
 
+      var withRelatedClause = _.union(config.relations, args.relations);
 
-      myModel.fetch().then(function(record) {
+      myModel.fetch({
+        withRelated: withRelatedClause
+      }).then(function(record) {
         if(args.serialize == 'jsonapi') {
           callback(null, mapper.map(record, config.model));
         } else {

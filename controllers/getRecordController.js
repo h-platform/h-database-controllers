@@ -23,7 +23,9 @@ module.exports = function(config){
         }
       });
 
-      myModel.fetch({withRelated: config.relations}).then(function(record) {
+      var withRelatedClause = _.union(config.relations, args.relations);
+
+      myModel.fetch({withRelated: withRelatedClause}).then(function(record) {
         if(args.serialize == 'jsonapi') {
           callback(null, mapper.map(record, config.model));
         } else {

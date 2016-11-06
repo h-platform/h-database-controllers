@@ -81,10 +81,12 @@ module.exports = function(config){
         
       });
 
+      var withRelatedClause = _.union(config.relations, args.relations);
+      
       queryBuilder.fetchPage({
           pageSize: pageSize,
           page: page,
-          withRelated: config.relations
+          withRelated: withRelatedClause
       }).then(function(records) {
         if(args.serialize == 'jsonapi') {
           callback(null, mapper.map(records, config.model));

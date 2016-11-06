@@ -30,7 +30,9 @@ module.exports = function(config){
         collection.load(config.relations);
       }
 
-      collection.fetch().then(function(records) {
+      var withRelatedClause = _.union(config.relations, args.relations);
+      
+      collection.fetch({withRelated: withRelatedClause}).then(function(records) {
         if(args.serialize == 'jsonapi') {
           callback(null, mapper.map(records, config.model));
         } else {

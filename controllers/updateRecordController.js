@@ -43,6 +43,9 @@ module.exports = function(config){
         }
       }
 
+      //attach record id
+      incoming_record.id = record_id;
+
       //check if there are some key / value left in the incoming record
       if(_.keys(incoming_record).length === 0){
         msg = 'Error during saveRecord for model ' + config.model + ': No attribute values to be saved in incoming record. Maybe they are all dropped by configured filter.';

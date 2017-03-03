@@ -21,10 +21,10 @@ module.exports = function(config){
 
       //make sure record has no id field
       if(incoming_record.id){
-        msg = 'Error during saveRecordController for model ' + config.model + ': payload cannot have id "' + record_id + '" for insert operation';
-        l.error(msg);
-        l.error('config:', config);
-        callback(msg, null);
+        msg = 'during insertRecordController for model ' + config.model + ': payload should not have id for insert operation, found id=' + record_id;
+        l.warn(msg);
+        l.warn('config:', config);
+        incoming_record = _.omit(incoming_record,['id']);
       }
 
       var fields = Models[config.model].fields;

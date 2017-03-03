@@ -43,9 +43,6 @@ module.exports = function(config){
         }
       }
 
-      //attach record id
-      incoming_record.id = record_id;
-
       //check if there are some key / value left in the incoming record
       if(_.keys(incoming_record).length === 0){
         msg = 'Error during saveRecord for model ' + config.model + ': No attribute values to be saved in incoming record. Maybe they are all dropped by configured filter.';
@@ -58,6 +55,7 @@ module.exports = function(config){
       .forge(incoming_record);
 
       //updating record ...
+      model.set('id', record_id);
       if(_.indexOf(fields,'updated_at') >= 0) model.set('updated_at', new Date());
       if(_.indexOf(fields,'updated_by') >= 0 && _.has(args, 'auth.credentials.id')) {
         model.set('updated_by', args.auth.credentials.id);

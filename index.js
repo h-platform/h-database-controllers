@@ -1,5 +1,5 @@
-var mainController = require('./controllers');
 var _ = require('lodash');
+var mainController = require('./controllers');
 var fs = require('fs');
 var glob = require('glob');
 var l = require(appRoot + '/logger');
@@ -19,8 +19,9 @@ module.exports = function(){
     glob(models_glob_pattern, {}, function (er, files) {
       // files is an array of filenames.
       _.each(files, function(file){
-        model_name = file;
-        model_name = _.replace(model_name, appRoot + '/' + models_path + '/', "");
+
+        var segments = _.split(file, /\//);
+        model_name = _.last(segments);
         model_name = _.replace(model_name, ".js", "");
         model_name = _.camelCase(model_name);
         model_name = _.snakeCase(model_name);
@@ -56,7 +57,7 @@ module.exports = function(){
         var controllers = mainController(config);
         _.each(controllers, function(controller){
           seneca.add(controller.pattern, controller.action);
-          l.info(' - Injecting Seneca action with pattern', controller.pattern, 'for model:', model_name);
+          l.info(' - Injecting Seneca action with pattern', controller.pattern);
         });
 
       });

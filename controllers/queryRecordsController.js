@@ -40,6 +40,7 @@ module.exports = function(config){
       var globalPageSize = global_config.has('application.pageSize') ? global_config.get('application.pageSize') : null;
       var pageSize = args.pageSize || config.pageSize || globalPageSize || 50;
       var page = args.page || 1;
+      var orderBy = args.orderBy || config.orderBy
       var model = Models[config.model];
       
       var queryBuilder = model.query(function(qb){
@@ -51,8 +52,8 @@ module.exports = function(config){
         }
 
         //order by clause
-        if (config.orderBy) {
-          qb.orderBy(config.orderBy);
+        if (orderBy) {
+          qb.orderBy(orderBy);
         }
 
         //where clause

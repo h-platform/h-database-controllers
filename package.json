@@ -1,6 +1,6 @@
 {
   "name": "h-database-controllers",
-  "version": "v0.0.4",
+  "version": "v0.0.5",
   "description": "This library provides premade controllers for bookshlef models for CRUD operations and injects coresponding seneca actions and patterns to the provided seneca instance",
   "main": "index.js",
   "scripts": {

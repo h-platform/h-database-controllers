@@ -5,6 +5,7 @@ var l = require(appRoot + '/logger');
 var _ = require('lodash');
 var Mapper = require('jsonapi-mapper');
 var mapper = new Mapper.Bookshelf('https://hlab.dev/jsonapi');
+var className = 'getRecordsController'
 
 
 module.exports = function(config){
@@ -15,10 +16,13 @@ module.exports = function(config){
       var collection = Models[config.model].collection();
       
       collection.query(function(qb){
-        if (config.select_query_keys) {
-          qb.select(config.select_query_keys);
-        } else if (config.select_keys) {
-          qb.select(config.select_keys);
+        //select config columns
+        if (_.has(config, className +'.columns')) {
+          qb.select(config[className].columns);
+        }
+        //select config columns
+        if (args.columns) {
+          qb.select(args.columns)
         }
 
         if(_.isFunction(config.getRecords)) {

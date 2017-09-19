@@ -2,6 +2,7 @@ var bookshelf = require(appRoot + '/bookshelf');
 var Models = require(appRoot + '/models');
 var l = require(appRoot + '/logger');
 var _ = require('lodash');
+var className = 'queryRecordController'
 
 module.exports = function(config){
   return {
@@ -11,11 +12,13 @@ module.exports = function(config){
       myModel = Models[config.model].forge();
 
       myModel.query(function(qb){
-        // support config.select_keys
-        if (config.select_record_keys) {
-          qb.select(config.select_record_keys);
-        } else if (config.select_keys) {
-          qb.select(config.select_keys);
+        //select config columns
+        if (_.has(config, className +'.columns')) {
+          qb.select(config[className].columns);
+        }
+        //select config columns
+        if (args.columns) {
+          qb.select(args.columns)
         }
 
         // support where: [{col:'' op:'' val:''}] in args
@@ -27,7 +30,7 @@ module.exports = function(config){
 
         //support loading by id
         if(args.id){
-          qb.where(id, args.id);
+          qb.where('id', args.id);
         }
 
         if(_.isFunction(config.queryRecord)) {

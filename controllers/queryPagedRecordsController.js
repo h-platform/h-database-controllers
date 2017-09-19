@@ -43,9 +43,13 @@ module.exports = function(config){
       var model = Models[config.model];
       
       var queryBuilder = model.query(function(qb){
-        //select columns
+        //select config columns
         if (_.has(config, className +'.columns')) {
           qb.select(config[className].columns);
+        }
+        //select config columns
+        if (args.columns) {
+          qb.select(args.columns)
         }
 
         //order by clause

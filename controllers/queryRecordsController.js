@@ -33,6 +33,8 @@ var global_config = require('config');
 var Mapper = require('jsonapi-mapper');
 var mapper = new Mapper.Bookshelf('https://hlab.dev/jsonapi');
 
+var className = 'queryRecordsController'
+
 module.exports = function(config){
   return {
     pattern: { role: config.role, model: config.model, cmd:'queryRecords' }, 
@@ -44,11 +46,13 @@ module.exports = function(config){
       var model = Models[config.model];
       
       var queryBuilder = model.query(function(qb){
-        //select columns
-        if (config.select_query_keys) {
-          qb.select(config.select_query_keys);
-        } else if (config.select_keys) {
-          qb.select(config.select_keys);
+        //select config columns
+        if (_.has(config, className +'.columns')) {
+          qb.select(config[className].columns);
+        }
+        //select config columns
+        if (args.columns) {
+          qb.select(args.columns)
         }
 
         //order by clause

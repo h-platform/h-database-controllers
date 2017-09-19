@@ -4,6 +4,8 @@ var l = require(appRoot + '/logger');
 
 var _ = require('lodash');
 
+var className = 'getRecordController'
+
 module.exports = function(config){
   return {
     pattern: { role: config.role, model: config.model, cmd:'getRecord' }, 
@@ -12,10 +14,13 @@ module.exports = function(config){
       myModel = Models[config.model].forge({id: args.id});
 
       myModel.query(function(qb){
-        if (config.select_record_keys) {
-          qb.select(config.select_record_keys);
-        } else if (config.select_keys) {
-          qb.select(config.select_keys);
+        //select config columns
+        if (_.has(config, className +'.columns')) {
+          qb.select(config[className].columns);
+        }
+        //select config columns
+        if (args.columns) {
+          qb.select(args.columns)
         }
 
         if(_.isFunction(config.getRecord)) {
